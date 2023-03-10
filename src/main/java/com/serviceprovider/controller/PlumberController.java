@@ -3,6 +3,7 @@ package com.serviceprovider.controller;
 import com.serviceprovider.response.PlumberResponse;
 import com.serviceprovider.service.PlumberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class PlumberController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<PlumberResponse> getAllDetails(){
+    public ResponseEntity<Page<PlumberResponse>> getAllDetails(){
         return ResponseEntity.ok(plumberService.getAllDetails());
     }
 
