@@ -45,7 +45,7 @@ public class PlumberServiceImpl implements PlumberService {
     @Override
     public PlumberResponse getById(Long id) {
         Plumber plumber =   plumberRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "not service persent"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "No plumber available"));
         return toResponse(plumber);
     }
 
