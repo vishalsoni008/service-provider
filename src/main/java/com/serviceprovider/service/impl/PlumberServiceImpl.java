@@ -21,7 +21,7 @@ public class PlumberServiceImpl implements PlumberService {
     private PlumberRepository plumberRepository;
 
     @Autowired
-    private PlumberServiceImpl(PlumberRepository plumberRepository){
+    public PlumberServiceImpl(PlumberRepository plumberRepository){
         this.plumberRepository = plumberRepository;
     }
 
