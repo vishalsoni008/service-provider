@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +18,7 @@ public class User {
     private String userDOB;
     private String mailId;
     private String password;
-
-//    private Date creationDate;
-//    private Date updationDate;
+    private String creationDate;
+    private String updationDate;
 
 }

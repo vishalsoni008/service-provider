@@ -13,36 +13,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/getAllUser")
-    public ResponseEntity<Page<UserResponse>> getAllUser(){
+    public ResponseEntity<Page<UserResponse>> getAllUser() {
         return ResponseEntity.ok(userService.getAllUser());
     }
 
     @PostMapping("/addUser")
-    public ResponseEntity<UserResponse> addUserRequest(@RequestBody UserRequest userRequest){
+    public ResponseEntity<UserResponse> addUserRequest(@RequestBody UserRequest userRequest) {
         return new ResponseEntity<>(userService.addRequest(userRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("/updateUser/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest){
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
         return new ResponseEntity<>(userService.updateUser(id, userRequest), HttpStatus.OK);
     }
 
     @GetMapping("/getUser/{id}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable Long id){
+    public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getById(id));
     }
-
-
-
-
 
 
 }
