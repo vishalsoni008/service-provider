@@ -16,7 +16,7 @@ public class PlumberController {
     private PlumberService plumberService;
 
     @Autowired
-    private PlumberController(PlumberService plumberService){
+    public PlumberController(PlumberService plumberService){
         this.plumberService = plumberService;
     }
 
