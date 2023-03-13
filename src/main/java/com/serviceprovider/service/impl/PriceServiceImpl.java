@@ -1,6 +1,6 @@
 package com.serviceprovider.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.serviceprovider.model.Plumber;
 import com.serviceprovider.model.Price;
 import com.serviceprovider.repository.PriceRepository;
 import com.serviceprovider.request.PriceRequest;
@@ -19,23 +19,21 @@ import java.util.stream.Collectors;
 public class PriceServiceImpl implements PriceService {
 
     private PriceRepository priceRepository;
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     public PriceServiceImpl(PriceRepository priceRepository){
         this.priceRepository = priceRepository;
     }
-//    private PriceResponse toResponse(Price price){
-//        return PriceResponse.builder()
-//                .price(price.getPrice())
-//                .build();
-//    }
+    private PriceResponse toResponse(Price price){
+        return PriceResponse.builder()
+                .price(price.getPrice())
+                .build();
+    }
     @Override
     public Page<PriceResponse> getAllPriceDetails() {
         return new PageImpl<>(priceRepository.findAll()
                 .stream()
-                .map(response -> objectMapper.writeValue(response, PriceResponse.class))
+                .map(this::toResponse)
                 .collect(Collectors.toList()));
     }
 
@@ -47,7 +45,7 @@ public class PriceServiceImpl implements PriceService {
         Price price = new Price();
         price.setPrice(priceRequest.getPrice());
         price = priceRepository.save(price);
-        return objectMapper.convertValue(price, PriceResponse.class);
+        return toResponse(price);
     }
 
     @Override
@@ -59,14 +57,14 @@ public class PriceServiceImpl implements PriceService {
         }
         price.setPrice(priceRequest.getPrice());
         price = priceRepository.save(price);
-        return objectMapper.convertValue(price, PriceResponse.class);
+        return toResponse(price);
     }
 
     @Override
     public PriceResponse getPriceById(Long id) {
         Price price = priceRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "Plan is not available"));
-        return objectMapper.convertValue(price, PriceResponse.class);
+        return toResponse(price);
     }
 
     @Override
