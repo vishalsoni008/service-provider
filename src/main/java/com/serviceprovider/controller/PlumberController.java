@@ -13,25 +13,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/plumber")
 public class PlumberController {
 
-    private PlumberService plumberService;
+    private final PlumberService plumberService;
 
     @Autowired
-    public PlumberController(PlumberService plumberService){
+    public PlumberController(PlumberService plumberService) {
         this.plumberService = plumberService;
     }
 
     @GetMapping("/")
-    public ResponseEntity<Page<PlumberResponse>> getAllDetails(){
+    public ResponseEntity<Page<PlumberResponse>> getAllDetails() {
         return ResponseEntity.ok(plumberService.getAllDetails());
     }
 
     @PostMapping("/")
-    public ResponseEntity<PlumberResponse> addNewRequest(@RequestBody PlumberRequest plumberRequest){
+    public ResponseEntity<PlumberResponse> addNewRequest(@RequestBody PlumberRequest plumberRequest) {
         return new ResponseEntity<>(plumberService.addRequest(plumberRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<PlumberResponse> updateService(@PathVariable Long id, @RequestBody PlumberRequest plumberRequest){
+    public ResponseEntity<PlumberResponse> updateService(@PathVariable Long id, @RequestBody PlumberRequest plumberRequest) {
         return new ResponseEntity<>(plumberService.updateService(id, plumberRequest), HttpStatus.OK);
     }
 

@@ -9,7 +9,6 @@ import com.serviceprovider.service.PlumberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,19 +17,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class PlumberServiceImpl implements PlumberService {
-    private PlumberRepository plumberRepository;
+    private final PlumberRepository plumberRepository;
 
     @Autowired
-    public PlumberServiceImpl(PlumberRepository plumberRepository){
+    public PlumberServiceImpl(PlumberRepository plumberRepository) {
         this.plumberRepository = plumberRepository;
     }
 
-    private PlumberResponse toResponse(Plumber plumber){
-            return PlumberResponse.builder()
-                    .serviceName(plumber.getServiceName())
-                    .price(plumber.getPrice())
-                    .serviceManName(plumber.getServiceManName())
-                    .build();
+    private PlumberResponse toResponse(Plumber plumber) {
+        return PlumberResponse.builder()
+                .serviceName(plumber.getServiceName())
+                .price(plumber.getPrice())
+                .serviceManName(plumber.getServiceManName())
+                .build();
     }
 
     @Override
@@ -38,26 +37,26 @@ public class PlumberServiceImpl implements PlumberService {
 //        return new PageImpl<>(plumberRepository.findAll(Sort.by("price"))
         return new PageImpl<>(plumberRepository.findAll(PlumberPagination.firstTwo)
                 .stream()
-                .map(this :: toResponse)
+                .map(this::toResponse)
                 .collect(Collectors.toList()));
     }
 
     @Override
     public PlumberResponse getById(Long id) {
-        Plumber plumber =   plumberRepository.findById(id)
+        Plumber plumber = plumberRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "No plumber available"));
         return toResponse(plumber);
     }
 
     @Override
     public PlumberResponse addRequest(PlumberRequest plumberRequest) {
-        if(plumberRequest.getServiceName() == null)
+        if (plumberRequest.getServiceName() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "pls provide service name");
 
-        if(plumberRequest.getPrice() == null)
+        if (plumberRequest.getPrice() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "pls chose a service price");
 
-        if(plumberRequest.getServiceManName() == null)
+        if (plumberRequest.getServiceManName() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "pls select a person");
 
         Plumber plumber = new Plumber();
@@ -77,13 +76,13 @@ public class PlumberServiceImpl implements PlumberService {
         Plumber plumber = plumberRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NO_CONTENT, "no service found"));
 
-        if(plumberRequest.getServiceName() == null)
+        if (plumberRequest.getServiceName() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "pls provide service name");
 
-        if(plumberRequest.getPrice() == null)
+        if (plumberRequest.getPrice() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "pls chose a service price");
 
-        if(plumberRequest.getServiceManName() == null)
+        if (plumberRequest.getServiceManName() == null)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "pls select a person");
 
 

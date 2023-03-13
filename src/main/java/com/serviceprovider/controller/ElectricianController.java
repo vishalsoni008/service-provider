@@ -13,26 +13,30 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/electrician")
 public class ElectricianController {
 
-    private ElectricianService electricianService;
+    private final ElectricianService electricianService;
+
     @Autowired
-    public ElectricianController(ElectricianService electricianService){
+    public ElectricianController(ElectricianService electricianService) {
         this.electricianService = electricianService;
     }
+
     @GetMapping("/")
-    public ResponseEntity<Page<ElectricianResponse>> getAllDetails(){
+    public ResponseEntity<Page<ElectricianResponse>> getAllDetails() {
         return ResponseEntity.ok(electricianService.getAllDetails());
     }
+
     @PostMapping("/")
-    public ResponseEntity<ElectricianResponse> addNewRequest(@RequestBody ElectricianRequest electricianRequest){
+    public ResponseEntity<ElectricianResponse> addNewRequest(@RequestBody ElectricianRequest electricianRequest) {
         return new ResponseEntity<>(electricianService.addRequest(electricianRequest), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ElectricianResponse> updateService(@PathVariable Long id, @RequestBody ElectricianRequest electricianRequest){
-        return new ResponseEntity<>(electricianService.updateService(id,electricianRequest),HttpStatus.OK);
+    public ResponseEntity<ElectricianResponse> updateService(@PathVariable Long id, @RequestBody ElectricianRequest electricianRequest) {
+        return new ResponseEntity<>(electricianService.updateService(id, electricianRequest), HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<ElectricianResponse> getById(@PathVariable Long id){
+    public ResponseEntity<ElectricianResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(electricianService.getById(id));
     }
 }
