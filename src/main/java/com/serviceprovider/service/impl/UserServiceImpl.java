@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
         user.setUserDOB(userRequest.getUserDOB());
         user.setMailId(userRequest.getMailId());
         user.setPassword(userRequest.getPassword());
-        user.setCreationDate(TimeSlug.simpleDateFormat.format(new Date()));
+        user.setCreationDate(TimeSlug.localDateTime);
 
         user = userRepository.save(user);
         return toResponse(user);
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User mailId is required");
         }
         user.setPassword(userRequest.getPassword());
-        user.setUpdationDate(TimeSlug.simpleDateFormat.format(new Date()));
+        user.setUpdationDate(TimeSlug.localDateTime);
         user = userRepository.save(user);
         return toResponse(user);
     }

@@ -20,25 +20,23 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/getAllUser")
+    @GetMapping("/")
     public ResponseEntity<Page<UserResponse>> getAllUser() {
         return ResponseEntity.ok(userService.getAllUser());
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("/")
     public ResponseEntity<UserResponse> addUserRequest(@RequestBody UserRequest userRequest) {
         return new ResponseEntity<>(userService.addRequest(userRequest), HttpStatus.CREATED);
     }
 
-    @PatchMapping("/updateUser/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
         return new ResponseEntity<>(userService.updateUser(id, userRequest), HttpStatus.OK);
     }
 
-    @GetMapping("/getUser/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getById(id));
     }
-
-
 }
